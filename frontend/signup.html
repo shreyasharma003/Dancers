@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up - Dancers</title>
+    <link rel="stylesheet" href="signup.css" />
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <header class="navbar">
+      <div class="container">
+        <div class="nav-content">
+          <button id="backHomeBtn" class="back-btn">← Back to Home</button>
+          <div class="nav-title">Create Account</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Signup Form Section -->
+    <main class="signup-section">
+      <div class="container">
+        <div class="signup-card">
+          <div class="card-header">
+            <h1 class="signup-heading">Join Dancers</h1>
+            <p class="signup-subheading">Start your dance journey today</p>
+          </div>
+
+          <form id="signupForm" class="signup-form">
+            <div class="form-group">
+              <label for="userid" class="form-label">User ID</label>
+              <input
+                type="text"
+                id="userid"
+                name="userid"
+                class="form-input"
+                placeholder="Enter your user ID"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="email" class="form-label">Email Address</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="form-input"
+                placeholder="Enter your email"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="name" class="form-label">Full Name</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                class="form-input"
+                placeholder="Enter your full name"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="role" class="form-label">Role</label>
+              <select id="role" name="role" class="form-input" required>
+                <option value="">Select your role</option>
+                <option value="dancer">Dancer</option>
+                <option value="instructor">Instructor</option>
+                <option value="choreographer">Choreographer</option>
+                <option value="student">Student</option>
+                <option value="enthusiast">Enthusiast</option>
+              </select>
+            </div>
+
+            <button type="submit" class="submit-btn">Create Account</button>
+          </form>
+
+          <div class="login-link">
+            Already have an account?
+            <a href="login.html" class="link">Login here</a>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="signup.js"></script>
+  </body>
+</html>
