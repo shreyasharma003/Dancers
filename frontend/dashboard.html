@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - Dancers</title>
+    <link rel="stylesheet" href="dashboard.css" />
+  </head>
+  <body>
+    <!-- Blurred Background Image -->
+    <div class="background-container">
+      <div class="background-image">
+        <!-- Background image will be added here -->
+      </div>
+    </div>
+
+    <!-- Dashboard Content -->
+    <div class="dashboard-container">
+      <!-- Header with Logout -->
+      <header class="dashboard-header">
+        <h1 class="dashboard-title">Dancers Dashboard</h1>
+        <button id="logoutBtn" class="logout-btn">Logout</button>
+      </header>
+
+      <!-- Dance Styles Section -->
+      <main class="content-section">
+        <div class="styles-card">
+          <h2 class="section-heading">Dance Styles</h2>
+
+          <!-- Dance Styles Container -->
+          <div id="stylesContainer" class="styles-grid">
+            <!-- Dance styles will be displayed here -->
+          </div>
+
+          <!-- Loading State -->
+          <div id="loadingState" class="loading-state">
+            <div class="loader"></div>
+            <p>Loading dance styles...</p>
+          </div>
+
+          <!-- Empty State -->
+          <div id="emptyState" class="empty-state">
+            <p>No dance styles found</p>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="dashboard.js"></script>
+  </body>
+</html>
