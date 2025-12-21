@@ -5,7 +5,7 @@ from auth import register_auth_routes
 from flask_cors import CORS 
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/api/*": {"origins": "*", "allow_headers": ["Content-Type", "Authorization"]}}, supports_credentials=True)
 
 @app.route('/')
 def home():
