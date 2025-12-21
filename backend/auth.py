@@ -31,9 +31,11 @@ def token_required(f):
                 # Extract token from "Bearer <token>"
                 token = auth_header.split(' ')[1]
             except IndexError:
+                print(f"Invalid token format: {auth_header}")
                 return jsonify({'error': 'Invalid token format. Use: Bearer <token>'}), 401
         
         if not token:
+            print("No token found in headers")
             return jsonify({'error': 'Token is missing. Please login first.'}), 401
         
         try:
@@ -42,11 +44,14 @@ def token_required(f):
             current_user = session.query(User).filter_by(user_id=payload['user_id']).first()
             
             if not current_user:
+                print(f"User not found for user_id: {payload['user_id']}")
                 return jsonify({'error': 'Invalid token. User not found.'}), 401
                 
         except jwt.ExpiredSignatureError:
+            print("Token expired")
             return jsonify({'error': 'Token has expired. Please login again.'}), 401
-        except jwt.InvalidTokenError:
+        except jwt.InvalidTokenError as e:
+            print(f"Invalid token error: {str(e)}")
             return jsonify({'error': 'Invalid token. Please login again.'}), 401
         
         # Pass current_user to the route
