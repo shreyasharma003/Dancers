@@ -65,7 +65,7 @@ function setupEventListeners() {
 // Load dance styles from backend
 async function loadDanceStyles() {
   try {
-    danceStyles = await apiGet("/dance-styles");
+    danceStyles = await apiGet("/api/dance-styles");
 
     // Get dancer count for each style
     for (let style of danceStyles) {
@@ -77,7 +77,9 @@ async function loadDanceStyles() {
       }
 
       try {
-        const dancers = await apiGet(`/dance-styles/${style.style_id}/dancers`);
+        const dancers = await apiGet(
+          `/api/dance-styles/${style.style_id}/dancers`
+        );
         style.dancerCount = dancers.length;
       } catch (error) {
         console.error(
@@ -169,7 +171,7 @@ async function showDancers(styleId, styleName) {
 // Load dancers from backend
 async function loadDancers(styleId) {
   try {
-    currentDancers = await apiGet(`/dance-styles/${styleId}/dancers`);
+    currentDancers = await apiGet(`/api/dance-styles/${styleId}/dancers`);
     renderDancers();
   } catch (error) {
     console.error("Failed to load dancers:", error);
