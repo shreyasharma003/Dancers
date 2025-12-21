@@ -8,10 +8,10 @@ document
   .getElementById("loginForm")
   .addEventListener("submit", function (event) {
     event.preventDefault();
-
+    // Store authentication token
+    localStorage.setItem("token", "dummy-token-12345");
     // Show success alert
     alert("Login successful!");
-
-    // Redirect to home page
-    window.location.href = "index.html";
+    // Redirect to dashboard
+    window.location.href = "dashboard.html";
   });
