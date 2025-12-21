@@ -1,14 +1,26 @@
 from sqlalchemy import create_engine, Column, Integer, String, Date, Numeric, ForeignKey
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import declarative_base, relationship
+import os
 
-url = "postgresql+psycopg2://postgres:Shreya03@localhost:5432/dancers_db"
-engine = create_engine(url)
+
+LOCAL_DATABASE_URL = "postgresql+psycopg2://postgres:Shreya03@localhost:5432/dancers_db"
+
+DATABASE_URL = os.getenv("DATABASE_URL", LOCAL_DATABASE_URL)
+
+
+# 👇 Required fix for Render PostgreSQL SSL issue
+if DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+
+
+engine = create_engine(DATABASE_URL)
 
 Session = sessionmaker(bind=engine)
 session = Session()
 
 Base = declarative_base()
+
 
 class Dancer(Base):
     __tablename__ = 'dancers'
@@ -29,6 +41,7 @@ class DanceStyle(Base):
     style_name = Column(String)
     dancers = relationship("Dancer", back_populates="style")
 
+
 class User(Base):
     __tablename__ = 'users'
 
@@ -37,6 +50,6 @@ class User(Base):
     user_name = Column(String)
     role = Column(String)
     password = Column(String)
-    
-# Base.metadata.drop_all(engine)
+
+
 Base.metadata.create_all(engine)
