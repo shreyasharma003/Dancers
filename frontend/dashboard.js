@@ -1,205 +1,11 @@
-// Static dummy data
-const danceStyles = [
-  { id: 1, name: "Hip Hop", icon: "🎤", dancerCount: 12 },
-  { id: 2, name: "Ballet", icon: "🩰", dancerCount: 8 },
-  { id: 3, name: "Contemporary", icon: "💃", dancerCount: 15 },
-  { id: 4, name: "Jazz", icon: "🎷", dancerCount: 10 },
-  { id: 5, name: "Salsa", icon: "🔥", dancerCount: 9 },
-  { id: 6, name: "Breakdance", icon: "🕺", dancerCount: 7 },
-];
-
-const dancersByStyle = {
-  1: [
-    // Hip Hop
-    {
-      id: 101,
-      name: "Marcus Johnson",
-      email: "marcus.johnson@dancers.com",
-      joining_date: "2019-03-15",
-      salary: 45000.0,
-      style_id: 1,
-    },
-    {
-      id: 102,
-      name: "Jasmine Lee",
-      email: "jasmine.lee@dancers.com",
-      joining_date: "2020-06-01",
-      salary: 42000.0,
-      style_id: 1,
-    },
-    {
-      id: 103,
-      name: "Andre Williams",
-      email: "andre.williams@dancers.com",
-      joining_date: "2018-01-20",
-      salary: 52000.0,
-      style_id: 1,
-    },
-    {
-      id: 104,
-      name: "Maya Rodriguez",
-      email: "maya.rodriguez@dancers.com",
-      joining_date: "2021-09-10",
-      salary: 38000.0,
-      style_id: 1,
-    },
-  ],
-  2: [
-    // Ballet
-    {
-      id: 201,
-      name: "Elena Petrov",
-      email: "elena.petrov@dancers.com",
-      joining_date: "2017-02-10",
-      salary: 65000.0,
-      style_id: 2,
-    },
-    {
-      id: 202,
-      name: "Sophie Martin",
-      email: "sophie.martin@dancers.com",
-      joining_date: "2019-08-15",
-      salary: 58000.0,
-      style_id: 2,
-    },
-    {
-      id: 203,
-      name: "Isabella Chen",
-      email: "isabella.chen@dancers.com",
-      joining_date: "2018-05-20",
-      salary: 62000.0,
-      style_id: 2,
-    },
-    {
-      id: 204,
-      name: "Oliver Thompson",
-      email: "oliver.thompson@dancers.com",
-      joining_date: "2016-11-05",
-      salary: 68000.0,
-      style_id: 2,
-    },
-  ],
-  3: [
-    // Contemporary
-    {
-      id: 301,
-      name: "Ava Mitchell",
-      email: "ava.mitchell@dancers.com",
-      joining_date: "2018-07-12",
-      salary: 48000.0,
-      style_id: 3,
-    },
-    {
-      id: 302,
-      name: "Michael Santos",
-      email: "michael.santos@dancers.com",
-      joining_date: "2017-04-22",
-      salary: 55000.0,
-      style_id: 3,
-    },
-    {
-      id: 303,
-      name: "Riya Sharma",
-      email: "riya.sharma@dancers.com",
-      joining_date: "2019-01-18",
-      salary: 46000.0,
-      style_id: 3,
-    },
-    {
-      id: 304,
-      name: "Lucas Anderson",
-      email: "lucas.anderson@dancers.com",
-      joining_date: "2018-10-08",
-      salary: 50000.0,
-      style_id: 3,
-    },
-  ],
-  4: [
-    // Jazz
-    {
-      id: 401,
-      name: "Nina Foster",
-      email: "nina.foster@dancers.com",
-      joining_date: "2016-09-14",
-      salary: 54000.0,
-      style_id: 4,
-    },
-    {
-      id: 402,
-      name: "Ryan Cooper",
-      email: "ryan.cooper@dancers.com",
-      joining_date: "2018-11-30",
-      salary: 47000.0,
-      style_id: 4,
-    },
-    {
-      id: 403,
-      name: "Zara Khan",
-      email: "zara.khan@dancers.com",
-      joining_date: "2020-03-25",
-      salary: 43000.0,
-      style_id: 4,
-    },
-  ],
-  5: [
-    // Salsa
-    {
-      id: 501,
-      name: "Carlos Mendez",
-      email: "carlos.mendez@dancers.com",
-      joining_date: "2015-05-01",
-      salary: 60000.0,
-      style_id: 5,
-    },
-    {
-      id: 502,
-      name: "Maria Garcia",
-      email: "maria.garcia@dancers.com",
-      joining_date: "2017-12-10",
-      salary: 51000.0,
-      style_id: 5,
-    },
-    {
-      id: 503,
-      name: "Diego Torres",
-      email: "diego.torres@dancers.com",
-      joining_date: "2016-08-18",
-      salary: 53000.0,
-      style_id: 5,
-    },
-  ],
-  6: [
-    // Breakdance
-    {
-      id: 601,
-      name: "Kevin Park",
-      email: "kevin.park@dancers.com",
-      joining_date: "2019-04-05",
-      salary: 44000.0,
-      style_id: 6,
-    },
-    {
-      id: 602,
-      name: "Takeshi Yamamoto",
-      email: "takeshi.yamamoto@dancers.com",
-      joining_date: "2017-10-12",
-      salary: 49000.0,
-      style_id: 6,
-    },
-    {
-      id: 603,
-      name: "Alex Rivera",
-      email: "alex.rivera@dancers.com",
-      joining_date: "2020-02-28",
-      salary: 41000.0,
-      style_id: 6,
-    },
-  ],
-};
+// Data storage
+let danceStyles = [];
+let currentDancers = [];
 
 // Navigation state
 let currentView = "styles"; // styles, dancers, detail
 let currentStyleId = null;
+let currentStyleName = null;
 let currentDancer = null;
 
 // DOM Elements
@@ -224,10 +30,10 @@ const editDancerForm = document.getElementById("editDancerForm");
 const addDancerForm = document.getElementById("addDancerForm");
 
 // Initialize dashboard
-function init() {
-  renderStyles();
-  setupEventListeners();
+async function init() {
   checkAuth();
+  setupEventListeners();
+  await loadDanceStyles();
 }
 
 // Check if user is authenticated
@@ -252,9 +58,52 @@ function setupEventListeners() {
   addDancerForm.addEventListener("submit", handleAddSubmit);
 }
 
+// ============================================
+// API INTEGRATION - Dance Styles
+// ============================================
+
+// Load dance styles from backend
+async function loadDanceStyles() {
+  try {
+    danceStyles = await apiGet("/dance-styles");
+
+    // Get dancer count for each style
+    for (let style of danceStyles) {
+      // Skip if style_id is missing or invalid
+      if (!style.style_id) {
+        console.warn("Style missing style_id:", style);
+        style.dancerCount = 0;
+        continue;
+      }
+
+      try {
+        const dancers = await apiGet(`/dance-styles/${style.style_id}/dancers`);
+        style.dancerCount = dancers.length;
+      } catch (error) {
+        console.error(
+          `Failed to load dancers for style ${style.style_id}:`,
+          error
+        );
+        style.dancerCount = 0;
+      }
+    }
+
+    renderStyles();
+  } catch (error) {
+    console.error("Failed to load dance styles:", error);
+    alert("Failed to load dance styles. Please try again.");
+  }
+}
+
 // Render dance styles
 function renderStyles() {
   stylesGrid.innerHTML = "";
+
+  if (danceStyles.length === 0) {
+    stylesGrid.innerHTML =
+      '<div class="no-results">No dance styles available.</div>';
+    return;
+  }
 
   danceStyles.forEach((style) => {
     const styleCard = createStyleCard(style);
@@ -266,20 +115,39 @@ function renderStyles() {
 function createStyleCard(style) {
   const card = document.createElement("div");
   card.className = "style-card";
+
+  // Icon mapping
+  const iconMap = {
+    "Hip Hop": "🎤",
+    Ballet: "🩰",
+    Contemporary: "💃",
+    Jazz: "🎷",
+    Salsa: "🔥",
+    Breakdance: "🕺",
+  };
+  const icon = iconMap[style.style_name] || "💃";
+
   card.innerHTML = `
-    <div class="style-card-icon">${style.icon}</div>
-    <h3 class="style-card-name">${style.name}</h3>
-    <p class="style-card-count">${style.dancerCount} Dancers</p>
+    <div class="style-card-icon">${icon}</div>
+    <h3 class="style-card-name">${style.style_name}</h3>
+    <p class="style-card-count">${style.dancerCount || 0} Dancers</p>
   `;
 
-  card.addEventListener("click", () => showDancers(style.id, style.name));
+  card.addEventListener("click", () =>
+    showDancers(style.style_id, style.style_name)
+  );
 
   return card;
 }
 
+// ============================================
+// API INTEGRATION - Dancers
+// ============================================
+
 // Show dancers for a specific style
-function showDancers(styleId, styleName) {
+async function showDancers(styleId, styleName) {
   currentStyleId = styleId;
+  currentStyleName = styleName;
   currentView = "dancers";
 
   // Update UI
@@ -291,25 +159,43 @@ function showDancers(styleId, styleName) {
   dancersView.style.display = "block";
   dancerDetailView.style.display = "none";
 
-  // Render dancers
-  renderDancers(styleId);
+  // Clear search
+  searchInput.value = "";
+
+  // Load and render dancers
+  await loadDancers(styleId);
+}
+
+// Load dancers from backend
+async function loadDancers(styleId) {
+  try {
+    currentDancers = await apiGet(`/dance-styles/${styleId}/dancers`);
+    renderDancers();
+  } catch (error) {
+    console.error("Failed to load dancers:", error);
+    currentDancers = [];
+    renderDancers();
+  }
 }
 
 // Render dancers for a style
-function renderDancers(styleId) {
+function renderDancers() {
   dancersGrid.innerHTML = "";
 
-  const dancers = dancersByStyle[styleId] || [];
-  const style = danceStyles.find((s) => s.id === styleId);
+  if (currentDancers.length === 0) {
+    dancersGrid.innerHTML =
+      '<div class="no-results">No dancers found for this style.</div>';
+    return;
+  }
 
-  dancers.forEach((dancer) => {
-    const dancerCard = createDancerCard(dancer, style.name);
+  currentDancers.forEach((dancer) => {
+    const dancerCard = createDancerCard(dancer);
     dancersGrid.appendChild(dancerCard);
   });
 }
 
 // Create dancer card
-function createDancerCard(dancer, styleName) {
+function createDancerCard(dancer) {
   const card = document.createElement("div");
   card.className = "dancer-card";
 
@@ -332,7 +218,9 @@ function createDancerCard(dancer, styleName) {
         <div class="dancer-stat-label">Dancer ID</div>
       </div>
       <div class="dancer-stat">
-        <div class="dancer-stat-value">${styleName}</div>
+        <div class="dancer-stat-value">${
+          dancer.style_name || currentStyleName
+        }</div>
         <div class="dancer-stat-label">Style</div>
       </div>
     </div>
@@ -355,7 +243,7 @@ function createDancerCard(dancer, styleName) {
   // Add click handler to card (but not on buttons)
   card.addEventListener("click", (e) => {
     if (!e.target.closest(".dancer-card-actions")) {
-      showDancerDetail(dancer, styleName);
+      showDancerDetail(dancer);
     }
   });
 
@@ -377,7 +265,7 @@ function createDancerCard(dancer, styleName) {
 }
 
 // Show dancer detail
-function showDancerDetail(dancer, styleName) {
+function showDancerDetail(dancer) {
   currentDancer = dancer;
   currentView = "detail";
 
@@ -391,11 +279,11 @@ function showDancerDetail(dancer, styleName) {
   dancerDetailView.style.display = "block";
 
   // Render detail
-  renderDancerDetail(dancer, styleName);
+  renderDancerDetail(dancer);
 }
 
 // Render dancer detail
-function renderDancerDetail(dancer, styleName) {
+function renderDancerDetail(dancer) {
   const initials = dancer.name
     .split(" ")
     .map((n) => n[0])
@@ -405,7 +293,9 @@ function renderDancerDetail(dancer, styleName) {
     <div class="dancer-detail-header">
       <div class="dancer-detail-avatar">${initials}</div>
       <h2 class="dancer-detail-name">${dancer.name}</h2>
-      <p class="dancer-detail-style">${styleName} Dancer</p>
+      <p class="dancer-detail-style">${
+        dancer.style_name || currentStyleName
+      } Dancer</p>
     </div>
     
     <div class="dancer-detail-stats">
@@ -418,7 +308,9 @@ function renderDancerDetail(dancer, styleName) {
         <div class="detail-stat-label">Style ID</div>
       </div>
       <div class="detail-stat-box">
-        <div class="detail-stat-value">$${dancer.salary.toLocaleString()}</div>
+        <div class="detail-stat-value">$${parseFloat(
+          dancer.salary
+        ).toLocaleString()}</div>
         <div class="detail-stat-label">Salary</div>
       </div>
       <div class="detail-stat-box">
@@ -441,17 +333,20 @@ function renderDancerDetail(dancer, styleName) {
       <p class="detail-section-content"><strong>Name:</strong> ${
         dancer.name
       }<br>
-      <strong>Dance Style:</strong> ${styleName}</p>
+      <strong>Dance Style:</strong> ${dancer.style_name || currentStyleName}</p>
     </div>
   `;
 }
+
+// ============================================
+// Navigation
+// ============================================
 
 // Handle back navigation
 function handleBack() {
   if (currentView === "detail") {
     // Go back to dancers list
-    const style = danceStyles.find((s) => s.id === currentStyleId);
-    showDancers(currentStyleId, style.name);
+    showDancers(currentStyleId, currentStyleName);
   } else if (currentView === "dancers") {
     // Go back to styles
     showStyles();
@@ -462,6 +357,7 @@ function handleBack() {
 function showStyles() {
   currentView = "styles";
   currentStyleId = null;
+  currentStyleName = null;
   currentDancer = null;
 
   // Update UI
@@ -476,19 +372,21 @@ function showStyles() {
 
 // Handle logout
 function handleLogout() {
-  localStorage.removeItem("token");
-  window.location.href = "login.html";
+  // Use the logout function from api.js
+  logout();
 }
+
+// ============================================
+// Search
+// ============================================
 
 // Search dancers
 function handleSearch(e) {
   const searchTerm = e.target.value.toLowerCase();
-  const dancers = dancersByStyle[currentStyleId] || [];
-  const style = danceStyles.find((s) => s.id === currentStyleId);
 
   dancersGrid.innerHTML = "";
 
-  const filteredDancers = dancers.filter(
+  const filteredDancers = currentDancers.filter(
     (dancer) =>
       dancer.name.toLowerCase().includes(searchTerm) ||
       dancer.email.toLowerCase().includes(searchTerm)
@@ -499,11 +397,15 @@ function handleSearch(e) {
       '<div class="no-results">No dancers found matching your search.</div>';
   } else {
     filteredDancers.forEach((dancer) => {
-      const dancerCard = createDancerCard(dancer, style.name);
+      const dancerCard = createDancerCard(dancer);
       dancersGrid.appendChild(dancerCard);
     });
   }
 }
+
+// ============================================
+// Edit Dancer
+// ============================================
 
 // Open edit modal
 function openEditModal(dancer) {
@@ -523,46 +425,42 @@ function closeEditModalFn() {
 }
 
 // Handle edit submit
-function handleEditSubmit(e) {
+async function handleEditSubmit(e) {
   e.preventDefault();
+
   const id = parseInt(document.getElementById("editDancerId").value);
+  const name = document.getElementById("editName").value;
+  const email = document.getElementById("editEmail").value;
   const joining_date = document.getElementById("editJoiningDate").value;
   const salary = parseFloat(document.getElementById("editSalary").value);
 
-  // Update only editable fields (joining_date and salary)
-  const dancers = dancersByStyle[currentStyleId];
-  const dancerIndex = dancers.findIndex((d) => d.id === id);
-  if (dancerIndex !== -1) {
-    dancers[dancerIndex] = {
-      ...dancers[dancerIndex],
-      joining_date,
-      salary,
-    };
-  }
+  const updatedData = {
+    name,
+    email,
+    joining_date,
+    salary,
+    style_id: currentStyleId,
+  };
 
-  // Re-render dancers
-  renderDancers(currentStyleId);
-  closeEditModalFn();
-  alert("Dancer updated successfully!");
+  try {
+    await apiPut(`/dancers/${id}`, updatedData);
+
+    // Reload dancers
+    await loadDancers(currentStyleId);
+    closeEditModalFn();
+    alert("Dancer updated successfully!");
+  } catch (error) {
+    console.error("Failed to update dancer:", error);
+    alert("Failed to update dancer. Please try again.");
+  }
 }
+
+// ============================================
+// Add Dancer
+// ============================================
 
 // Open add modal
 function openAddModal() {
-  // Generate next available ID
-  const dancers = dancersByStyle[currentStyleId];
-  let maxId = 0;
-
-  // Find the highest ID in the current style
-  dancers.forEach((dancer) => {
-    if (dancer.id > maxId) {
-      maxId = dancer.id;
-    }
-  });
-
-  // Set the next ID
-  const nextId = maxId + 1;
-  document.getElementById("addId").value = nextId;
-
   addModal.style.display = "flex";
 }
 
@@ -573,18 +471,16 @@ function closeAddModalFn() {
 }
 
 // Handle add submit
-function handleAddSubmit(e) {
+async function handleAddSubmit(e) {
   e.preventDefault();
+
   const id = parseInt(document.getElementById("addId").value);
   const name = document.getElementById("addName").value;
   const email = document.getElementById("addEmail").value;
   const joining_date = document.getElementById("addJoiningDate").value;
   const salary = parseFloat(document.getElementById("addSalary").value);
 
-  // Add new dancer (ID is already validated as auto-generated)
-  const dancers = dancersByStyle[currentStyleId];
-  const newDancer = {
-    id,
+  const newDancerData = {
     name,
     email,
     joining_date,
@@ -592,42 +488,51 @@ function handleAddSubmit(e) {
     style_id: currentStyleId,
   };
 
-  dancers.push(newDancer);
+  try {
+    const response = await apiPost("/dancers", newDancerData);
 
-  // Update dancer count
-  const style = danceStyles.find((s) => s.id === currentStyleId);
-  if (style) {
-    style.dancerCount++;
+    // Reload dancers and styles
+    await loadDancers(currentStyleId);
+    await loadDanceStyles();
+
+    closeAddModalFn();
+    alert("Dancer added successfully!");
+  } catch (error) {
+    console.error("Failed to add dancer:", error);
+
+    // Check if it's a duplicate email error
+    if (error.message && error.message.includes("email already exists")) {
+      alert(
+        "A dancer with this email already exists. Please use a different email."
+      );
+    } else {
+      alert("Failed to add dancer. Please try again.");
+    }
   }
-
-  // Re-render dancers
-  renderDancers(currentStyleId);
-  closeAddModalFn();
-  alert("Dancer added successfully!");
 }
 
+// ============================================
+// Delete Dancer
+// ============================================
+
 // Delete dancer
-function deleteDancer(id) {
+async function deleteDancer(id) {
   if (!confirm("Are you sure you want to delete this dancer?")) {
     return;
   }
 
-  // Remove dancer from data
-  const dancers = dancersByStyle[currentStyleId];
-  const dancerIndex = dancers.findIndex((d) => d.id === id);
-  if (dancerIndex !== -1) {
-    dancers.splice(dancerIndex, 1);
-  }
+  try {
+    await apiDelete(`/dancers/${id}`);
 
-  // Update dancer count
-  const style = danceStyles.find((s) => s.id === currentStyleId);
-  if (style) {
-    style.dancerCount--;
-  }
+    // Reload dancers and styles
+    await loadDancers(currentStyleId);
+    await loadDanceStyles();
 
-  // Re-render dancers
-  renderDancers(currentStyleId);
-  alert("Dancer deleted successfully!");
+    alert("Dancer deleted successfully!");
+  } catch (error) {
+    console.error("Failed to delete dancer:", error);
+    alert("Failed to delete dancer. Please try again.");
+  }
 }
 
 // Initialize when DOM is loaded
