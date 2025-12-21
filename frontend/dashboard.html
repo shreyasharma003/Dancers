@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - Dancers</title>
+    <link rel="stylesheet" href="dashboard.css" />
+  </head>
+  <body>
+    <!-- Dashboard Container -->
+    <div class="dashboard-container">
+      <!-- Header with Logout -->
+      <header class="dashboard-header">
+        <div class="header-left">
+          <button id="backBtn" class="back-btn" style="display: none">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path
+                d="M12.5 15L7.5 10L12.5 5"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            Back
+          </button>
+          <h1 class="dashboard-title" id="pageTitle">Dance Styles</h1>
+        </div>
+        <button id="logoutBtn" class="logout-btn">Logout</button>
+      </header>
+
+      <!-- Main Content Area -->
+      <main class="content-section">
+        <!-- Dance Styles View -->
+        <div id="stylesView" class="view-container">
+          <div class="styles-grid" id="stylesGrid">
+            <!-- Dance styles will be rendered here -->
+          </div>
+        </div>
+
+        <!-- Dancers List View -->
+        <div id="dancersView" class="view-container" style="display: none">
+          <div class="dancers-controls">
+            <div class="search-bar">
+              <svg
+                class="search-icon"
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+              >
+                <circle
+                  cx="9"
+                  cy="9"
+                  r="6"
+                  stroke="currentColor"
+                  stroke-width="2"
+                />
+                <path
+                  d="M14 14L18 18"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+              </svg>
+              <input
+                type="text"
+                id="searchInput"
+                class="search-input"
+                placeholder="Search dancers by name or email..."
+              />
+            </div>
+            <button id="addDancerBtn" class="add-dancer-btn">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path
+                  d="M10 5V15M5 10H15"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+              </svg>
+              Add Dancer
+            </button>
+          </div>
+          <div class="dancers-grid" id="dancersGrid">
+            <!-- Dancers will be rendered here -->
+          </div>
+        </div>
+
+        <!-- Dancer Detail View -->
+        <div id="dancerDetailView" class="view-container" style="display: none">
+          <div class="dancer-detail-card" id="dancerDetailCard">
+            <!-- Dancer details will be rendered here -->
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Edit Dancer Modal -->
+    <div id="editModal" class="modal" style="display: none">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title">Edit Dancer</h2>
+          <button class="modal-close" id="closeEditModal">&times;</button>
+        </div>
+        <form id="editDancerForm" class="modal-form">
+          <input type="hidden" id="editDancerId" />
+          <div class="form-group">
+            <label class="form-label">Dancer ID</label>
+            <input
+              type="text"
+              id="editDancerIdDisplay"
+              class="form-input"
+              readonly
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Name</label>
+            <input type="text" id="editName" class="form-input" readonly />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" id="editEmail" class="form-input" readonly />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Joining Date</label>
+            <input
+              type="date"
+              id="editJoiningDate"
+              class="form-input"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Salary</label>
+            <input
+              type="number"
+              id="editSalary"
+              class="form-input"
+              step="0.01"
+              required
+            />
+          </div>
+          <div class="modal-actions">
+            <button type="button" class="btn-cancel" id="cancelEdit">
+              Cancel
+            </button>
+            <button type="submit" class="btn-save">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Add Dancer Modal -->
+    <div id="addModal" class="modal" style="display: none">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title">Add New Dancer</h2>
+          <button class="modal-close" id="closeAddModal">&times;</button>
+        </div>
+        <form id="addDancerForm" class="modal-form">
+          <div class="form-group">
+            <label class="form-label">Dancer ID</label>
+            <input type="text" id="addId" class="form-input" readonly />
+            <small class="form-help">Auto-generated by system</small>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Name</label>
+            <input type="text" id="addName" class="form-input" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" id="addEmail" class="form-input" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Joining Date</label>
+            <input
+              type="date"
+              id="addJoiningDate"
+              class="form-input"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Salary</label>
+            <input
+              type="number"
+              id="addSalary"
+              class="form-input"
+              step="0.01"
+              required
+            />
+          </div>
+          <div class="modal-actions">
+            <button type="button" class="btn-cancel" id="cancelAdd">
+              Cancel
+            </button>
+            <button type="submit" class="btn-save">Add Dancer</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="api.js"></script>
+    <script src="dashboard.js"></script>
+  </body>
+</html>
