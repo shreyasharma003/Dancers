@@ -1,0 +1,8 @@
+flask
+sqlalchemy
+psycopg2
+werkzeug
+pyjwt
+waitress
+marshmallow
+flask-cors
