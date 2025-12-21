@@ -1,6 +1,6 @@
 // API Utility functions for authenticated requests
 
-const API_BASE_URL = "http://localhost:5000/api";
+const API_BASE_URL = "https://dancers.onrender.com/api";
 
 /**
  * Make an authenticated API request
