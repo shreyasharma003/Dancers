@@ -100,6 +100,10 @@ def add_dancer():
         return jsonify({'error': 'Missing required fields: name, email, joining_date, salary, style_id'}), 400
     
     try:
+        # Check if email already exists
+        existing_dancer = session.query(Dancer).filter_by(email=data['email']).first()
+        if existing_dancer:
+            return jsonify({'error': 'A dancer with this email already exists'}), 409
         
         max_id = session.query(Dancer).order_by(Dancer.id.desc()).first()
         new_id = (max_id.id + 1) if max_id else 1

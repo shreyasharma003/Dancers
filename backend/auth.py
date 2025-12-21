@@ -5,7 +5,6 @@ from datetime import datetime, timedelta
 from functools import wraps
 from models import session, User
 
-# JWT Secret Key - Change this in production
 SECRET_KEY = "53074238419950057717466071969018171246"
 
 def generate_token(user_id, email):
@@ -112,7 +111,6 @@ def login():
     try:
      
         user = session.query(User).filter_by(email=data['email']).first()
-        
         
         if not user:
             return jsonify({'error': 'Invalid credentials'}), 401
