@@ -445,7 +445,7 @@ async function handleEditSubmit(e) {
   };
 
   try {
-    await apiPut(`/dancers/${id}`, updatedData);
+    await apiPut(`/api/dancers/${id}`, updatedData);
 
     // Reload dancers
     await loadDancers(currentStyleId);
@@ -491,7 +491,7 @@ async function handleAddSubmit(e) {
   };
 
   try {
-    const response = await apiPost("/dancers", newDancerData);
+    const response = await apiPost("/api/dancers", newDancerData);
 
     // Reload dancers and styles
     await loadDancers(currentStyleId);
@@ -524,7 +524,7 @@ async function deleteDancer(id) {
   }
 
   try {
-    await apiDelete(`/dancers/${id}`);
+    await apiDelete(`/api/dancers/${id}`);
 
     // Reload dancers and styles
     await loadDancers(currentStyleId);

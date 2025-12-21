@@ -13,10 +13,14 @@ async function authenticatedFetch(endpoint, options = {}) {
   const token = localStorage.getItem("token");
 
   if (!token) {
+    console.error("No token found in localStorage");
     // Redirect to login if no token
     window.location.href = "login.html";
     throw new Error("No authentication token found");
   }
+
+  console.log("Making request to:", `${API_BASE_URL}${endpoint}`);
+  console.log("Token:", token ? token.substring(0, 20) + "..." : "none");
 
   // Set up headers
   const headers = {
@@ -31,8 +35,11 @@ async function authenticatedFetch(endpoint, options = {}) {
       headers,
     });
 
+    console.log("Response status:", response.status);
+
     // Check if token is invalid or expired
     if (response.status === 401) {
+      console.error("401 Unauthorized - token invalid or expired");
       // Clear token and redirect to login
       localStorage.removeItem("token");
       localStorage.removeItem("user");
