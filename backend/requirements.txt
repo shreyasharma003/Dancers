@@ -6,3 +6,4 @@ pyjwt
 waitress
 marshmallow
 flask-cors
+gunicorn
