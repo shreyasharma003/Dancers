@@ -1,14 +1,11 @@
-// Data storage
 let danceStyles = [];
 let currentDancers = [];
 
-// Navigation state
-let currentView = "styles"; // styles, dancers, detail
+let currentView = "styles";
 let currentStyleId = null;
 let currentStyleName = null;
 let currentDancer = null;
 
-// DOM Elements
 const backBtn = document.getElementById("backBtn");
 const logoutBtn = document.getElementById("logoutBtn");
 const pageTitle = document.getElementById("pageTitle");
@@ -29,14 +26,12 @@ const cancelAdd = document.getElementById("cancelAdd");
 const editDancerForm = document.getElementById("editDancerForm");
 const addDancerForm = document.getElementById("addDancerForm");
 
-// Initialize dashboard
 async function init() {
   checkAuth();
   setupEventListeners();
   await loadDanceStyles();
 }
 
-// Check if user is authenticated
 function checkAuth() {
   const token = localStorage.getItem("token");
   if (!token) {
@@ -58,37 +53,9 @@ function setupEventListeners() {
   addDancerForm.addEventListener("submit", handleAddSubmit);
 }
 
-// ============================================
-// API INTEGRATION - Dance Styles
-// ============================================
-
-// Load dance styles from backend
 async function loadDanceStyles() {
   try {
     danceStyles = await apiGet("/api/dance-styles");
-
-    // Get dancer count for each style
-    for (let style of danceStyles) {
-      // Skip if style_id is missing or invalid
-      if (!style.style_id) {
-        console.warn("Style missing style_id:", style);
-        style.dancerCount = 0;
-        continue;
-      }
-
-      try {
-        const dancers = await apiGet(
-          `/api/dance-styles/${style.style_id}/dancers`
-        );
-        style.dancerCount = dancers.length;
-      } catch (error) {
-        console.error(
-          `Failed to load dancers for style ${style.style_id}:`,
-          error
-        );
-        style.dancerCount = 0;
-      }
-    }
 
     renderStyles();
   } catch (error) {
@@ -97,7 +64,6 @@ async function loadDanceStyles() {
   }
 }
 
-// Render dance styles
 function renderStyles() {
   stylesGrid.innerHTML = "";
 
@@ -113,7 +79,6 @@ function renderStyles() {
   });
 }
 
-// Create style card
 function createStyleCard(style) {
   const card = document.createElement("div");
   card.className = "style-card";
@@ -132,7 +97,6 @@ function createStyleCard(style) {
   card.innerHTML = `
     <div class="style-card-icon">${icon}</div>
     <h3 class="style-card-name">${style.style_name}</h3>
-    <p class="style-card-count">${style.dancerCount || 0} Dancers</p>
   `;
 
   card.addEventListener("click", () =>
@@ -142,33 +106,23 @@ function createStyleCard(style) {
   return card;
 }
 
-// ============================================
-// API INTEGRATION - Dancers
-// ============================================
-
-// Show dancers for a specific style
 async function showDancers(styleId, styleName) {
   currentStyleId = styleId;
   currentStyleName = styleName;
   currentView = "dancers";
 
-  // Update UI
   pageTitle.textContent = styleName;
   backBtn.style.display = "flex";
 
-  // Hide styles view, show dancers view
   stylesView.style.display = "none";
   dancersView.style.display = "block";
   dancerDetailView.style.display = "none";
 
-  // Clear search
   searchInput.value = "";
 
-  // Load and render dancers
   await loadDancers(styleId);
 }
 
-// Load dancers from backend
 async function loadDancers(styleId) {
   try {
     currentDancers = await apiGet(`/api/dance-styles/${styleId}/dancers`);
@@ -180,7 +134,6 @@ async function loadDancers(styleId) {
   }
 }
 
-// Render dancers for a style
 function renderDancers() {
   dancersGrid.innerHTML = "";
 
@@ -196,7 +149,6 @@ function renderDancers() {
   });
 }
 
-// Create dancer card
 function createDancerCard(dancer) {
   const card = document.createElement("div");
   card.className = "dancer-card";
@@ -249,7 +201,6 @@ function createDancerCard(dancer) {
     }
   });
 
-  // Add event listeners to buttons
   const editBtn = card.querySelector(".btn-edit");
   const deleteBtn = card.querySelector(".btn-delete");
 
@@ -266,25 +217,20 @@ function createDancerCard(dancer) {
   return card;
 }
 
-// Show dancer detail
 function showDancerDetail(dancer) {
   currentDancer = dancer;
   currentView = "detail";
 
-  // Update UI
   pageTitle.textContent = "Dancer Profile";
   backBtn.style.display = "flex";
 
-  // Hide dancers view, show detail view
   stylesView.style.display = "none";
   dancersView.style.display = "none";
   dancerDetailView.style.display = "block";
 
-  // Render detail
   renderDancerDetail(dancer);
 }
 
-// Render dancer detail
 function renderDancerDetail(dancer) {
   const initials = dancer.name
     .split(" ")
@@ -340,49 +286,32 @@ function renderDancerDetail(dancer) {
   `;
 }
 
-// ============================================
-// Navigation
-// ============================================
-
-// Handle back navigation
 function handleBack() {
   if (currentView === "detail") {
-    // Go back to dancers list
     showDancers(currentStyleId, currentStyleName);
   } else if (currentView === "dancers") {
-    // Go back to styles
     showStyles();
   }
 }
 
-// Show styles view
 function showStyles() {
   currentView = "styles";
   currentStyleId = null;
   currentStyleName = null;
   currentDancer = null;
 
-  // Update UI
   pageTitle.textContent = "Dance Styles";
   backBtn.style.display = "none";
 
-  // Show styles view, hide others
   stylesView.style.display = "block";
   dancersView.style.display = "none";
   dancerDetailView.style.display = "none";
 }
 
-// Handle logout
 function handleLogout() {
-  // Use the logout function from api.js
   logout();
 }
 
-// ============================================
-// Search
-// ============================================
-
-// Search dancers
 function handleSearch(e) {
   const searchTerm = e.target.value.toLowerCase();
 
@@ -405,11 +334,6 @@ function handleSearch(e) {
   }
 }
 
-// ============================================
-// Edit Dancer
-// ============================================
-
-// Open edit modal
 function openEditModal(dancer) {
   document.getElementById("editDancerId").value = dancer.id;
   document.getElementById("editDancerIdDisplay").value = dancer.id;
@@ -420,13 +344,11 @@ function openEditModal(dancer) {
   editModal.style.display = "flex";
 }
 
-// Close edit modal
 function closeEditModalFn() {
   editModal.style.display = "none";
   editDancerForm.reset();
 }
 
-// Handle edit submit
 async function handleEditSubmit(e) {
   e.preventDefault();
 
@@ -447,7 +369,6 @@ async function handleEditSubmit(e) {
   try {
     await apiPut(`/api/dancers/${id}`, updatedData);
 
-    // Reload dancers
     await loadDancers(currentStyleId);
     closeEditModalFn();
     alert("Dancer updated successfully!");
@@ -457,22 +378,15 @@ async function handleEditSubmit(e) {
   }
 }
 
-// ============================================
-// Add Dancer
-// ============================================
-
-// Open add modal
 function openAddModal() {
   addModal.style.display = "flex";
 }
 
-// Close add modal
 function closeAddModalFn() {
   addModal.style.display = "none";
   addDancerForm.reset();
 }
 
-// Handle add submit
 async function handleAddSubmit(e) {
   e.preventDefault();
 
@@ -493,7 +407,6 @@ async function handleAddSubmit(e) {
   try {
     const response = await apiPost("/api/dancers", newDancerData);
 
-    // Reload dancers and styles
     await loadDancers(currentStyleId);
     await loadDanceStyles();
 
@@ -502,7 +415,6 @@ async function handleAddSubmit(e) {
   } catch (error) {
     console.error("Failed to add dancer:", error);
 
-    // Check if it's a duplicate email error
     if (error.message && error.message.includes("email already exists")) {
       alert(
         "A dancer with this email already exists. Please use a different email."
@@ -513,11 +425,6 @@ async function handleAddSubmit(e) {
   }
 }
 
-// ============================================
-// Delete Dancer
-// ============================================
-
-// Delete dancer
 async function deleteDancer(id) {
   if (!confirm("Are you sure you want to delete this dancer?")) {
     return;
@@ -526,7 +433,6 @@ async function deleteDancer(id) {
   try {
     await apiDelete(`/api/dancers/${id}`);
 
-    // Reload dancers and styles
     await loadDancers(currentStyleId);
     await loadDanceStyles();
 
@@ -537,5 +443,4 @@ async function deleteDancer(id) {
   }
 }
 
-// Initialize when DOM is loaded
 document.addEventListener("DOMContentLoaded", init);
