@@ -2,8 +2,8 @@ from sqlalchemy import create_engine, Column, Integer, String, Date, Numeric, Fo
 from sqlalchemy.orm import sessionmaker, declarative_base, relationship
 import os
 
-LOCAL_DATABASE_URL = "postgresql+psycopg2://postgres:Shreya03@localhost:5432/dancers_db"
-RENDER_DATABASE_URL = "postgresql+psycopg2://dancers_db_user:SPDrsOOTTpqp8FqUJaW5vGdUbz9gPYXa@dpg-d544ueili9vc73agv5qg-a.oregon-postgres.render.com/dancers_db"
+# LOCAL_DATABASE_URL = "postgresql+psycopg2://postgres:Shreya03@localhost:5432/dancers_db"
+RENDER_DATABASE_URL = "postgresql+psycopg2://ssha:ZateStW6ucyfgA2JXeHrwCWwVP2P7Ezq@dpg-d54fquili9vc73efqtug-a/dancers_db_3tqd"
 
 DATABASE_URL = os.getenv("DATABASE_URL", RENDER_DATABASE_URL)
 
