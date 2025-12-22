@@ -3,8 +3,9 @@ from sqlalchemy.orm import sessionmaker, declarative_base, relationship
 import os
 
 LOCAL_DATABASE_URL = "postgresql+psycopg2://postgres:Shreya03@localhost:5432/dancers_db"
+RENDER_DATABASE_URL = "postgresql+psycopg2://dancers_db_ngj3_user:WeDzWRNxhNbULew6epSD25W23ezFtwol@dpg-d54epf3e5dus73bh9v50-a.virginia-postgres.render.com/dancers_db_ngj3"
 
-DATABASE_URL = os.getenv("DATABASE_URL", LOCAL_DATABASE_URL)
+DATABASE_URL = os.getenv("DATABASE_URL", RENDER_DATABASE_URL)
 
 if DATABASE_URL.startswith("postgres://"):
     DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql+psycopg2://", 1)
