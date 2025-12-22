@@ -3,7 +3,7 @@ from sqlalchemy.orm import sessionmaker, declarative_base, relationship
 import os
 
 LOCAL_DATABASE_URL = "postgresql+psycopg2://postgres:Shreya03@localhost:5432/dancers_db"
-RENDER_DATABASE_URL = "postgresql+psycopg2://dancers_db_ngj3_user:WeDzWRNxhNbULew6epSD25W23ezFtwol@dpg-d54epf3e5dus73bh9v50-a.virginia-postgres.render.com/dancers_db_ngj3"
+RENDER_DATABASE_URL = "postgresql+psycopg2://dancers_db_user:SPDrsOOTTpqp8FqUJaW5vGdUbz9gPYXa@dpg-d544ueili9vc73agv5qg-a.oregon-postgres.render.com/dancers_db"
 
 DATABASE_URL = os.getenv("DATABASE_URL", RENDER_DATABASE_URL)
 
