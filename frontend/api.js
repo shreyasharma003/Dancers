@@ -1,20 +1,11 @@
-// API Utility functions for authenticated requests
-
 const API_BASE_URL = "https://dancers.onrender.com";
+// const API_BASE_URL = "http://127.0.0.1:5000";
 
-/**
- * Make an authenticated API request
- * @param {string} endpoint - API endpoint (e.g., '/dancers')
- * @param {object} options - Fetch options (method, body, etc.)
- * @returns {Promise} - Response data
- */
 async function authenticatedFetch(endpoint, options = {}) {
-  // Get token from localStorage
   const token = localStorage.getItem("token");
 
   if (!token) {
     console.error("No token found in localStorage");
-    // Redirect to login if no token
     window.location.href = "login.html";
     throw new Error("No authentication token found");
   }
@@ -22,7 +13,6 @@ async function authenticatedFetch(endpoint, options = {}) {
   console.log("Making request to:", `${API_BASE_URL}${endpoint}`);
   console.log("Token:", token ? token.substring(0, 20) + "..." : "none");
 
-  // Set up headers
   const headers = {
     "Content-Type": "application/json",
     Authorization: `Bearer ${token}`,
@@ -37,10 +27,8 @@ async function authenticatedFetch(endpoint, options = {}) {
 
     console.log("Response status:", response.status);
 
-    // Check if token is invalid or expired
     if (response.status === 401) {
       console.error("401 Unauthorized - token invalid or expired");
-      // Clear token and redirect to login
       localStorage.removeItem("token");
       localStorage.removeItem("user");
       alert("Session expired. Please login again.");
@@ -55,9 +43,6 @@ async function authenticatedFetch(endpoint, options = {}) {
   }
 }
 
-/**
- * GET request with authentication
- */
 async function apiGet(endpoint) {
   const response = await authenticatedFetch(endpoint, {
     method: "GET",
@@ -71,9 +56,6 @@ async function apiGet(endpoint) {
   return data;
 }
 
-/**
- * POST request with authentication
- */
 async function apiPost(endpoint, data) {
   const response = await authenticatedFetch(endpoint, {
     method: "POST",
@@ -88,9 +70,6 @@ async function apiPost(endpoint, data) {
   return responseData;
 }
 
-/**
- * PUT request with authentication
- */
 async function apiPut(endpoint, data) {
   const response = await authenticatedFetch(endpoint, {
     method: "PUT",
@@ -105,9 +84,6 @@ async function apiPut(endpoint, data) {
   return responseData;
 }
 
-/**
- * DELETE request with authentication
- */
 async function apiDelete(endpoint) {
   const response = await authenticatedFetch(endpoint, {
     method: "DELETE",
@@ -121,24 +97,15 @@ async function apiDelete(endpoint) {
   return responseData;
 }
 
-/**
- * Check if user is authenticated
- */
 function isAuthenticated() {
   return localStorage.getItem("token") !== null;
 }
 
-/**
- * Get current user from localStorage
- */
 function getCurrentUser() {
   const userStr = localStorage.getItem("user");
   return userStr ? JSON.parse(userStr) : null;
 }
 
-/**
- * Logout - clear token and user data
- */
 function logout() {
   localStorage.removeItem("token");
   localStorage.removeItem("user");

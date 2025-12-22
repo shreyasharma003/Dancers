@@ -183,6 +183,7 @@ body {
   font-size: 36px;
   color: white;
   box-shadow: 0 4px 15px rgba(168, 50, 50, 0.3);
+  text-align: center;
 }
 
 .style-card-name {
