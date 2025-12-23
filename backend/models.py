@@ -1,11 +1,16 @@
 from sqlalchemy import create_engine, Column, Integer, String, Date, Numeric, ForeignKey
 from sqlalchemy.orm import sessionmaker, declarative_base, relationship
 import os
+from dotenv import load_dotenv
 
-# LOCAL_DATABASE_URL = "postgresql+psycopg2://postgres:Shreya03@localhost:5432/dancers_db"
-# RENDER_DATABASE_URL = "postgresql://ssha:ZateStW6ucyfgA2JXeHrwCWwVP2P7Ezq@dpg-d54fquili9vc73efqtug-a/dancers_db_3tqd"
-SUPA_DATABASE_URL = "postgresql://postgres.shdqhvelidojpnyuzsyk:Shreya!!03@aws-1-ap-southeast-1.pooler.supabase.com:5432/postgres"
-DATABASE_URL = os.getenv("DATABASE_URL", SUPA_DATABASE_URL)
+# Load environment variables from .env file
+load_dotenv()
+
+# Get database URL from environment variable
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+if not DATABASE_URL:
+    raise ValueError("DATABASE_URL environment variable is not set. Please check your .env file.")
 
 engine = create_engine(DATABASE_URL)
 

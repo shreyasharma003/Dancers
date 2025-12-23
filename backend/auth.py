@@ -4,8 +4,16 @@ import jwt
 from datetime import datetime, timedelta
 from functools import wraps
 from models import session, User
+import os
+from dotenv import load_dotenv
 
-SECRET_KEY = "53074238419950057717466071969018171246"
+# Load environment variables from .env file
+load_dotenv()
+
+SECRET_KEY = os.getenv("SECRET_KEY")
+
+if not SECRET_KEY:
+    raise ValueError("SECRET_KEY environment variable is not set. Please check your .env file.")
 
 def generate_token(user_id, email):
     """Generate JWT token that expires in 3 hours"""
